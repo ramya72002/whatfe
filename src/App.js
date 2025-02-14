@@ -9,7 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 import SocketContext from './context/SocketContext';
 import InstallPWAButton from './components/PWA/InstallPWAButton';
 // socket io connection
-const socket = io("https://whatsbe.vercel.app", {
+const socket = io("https://whatsbe.onrender.com", {
     transports: ["websocket"],
     withCredentials: true
 });

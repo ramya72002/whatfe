@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+    If we wanted to add some custom classes (useful if we wnat to apply same styling multiple places) and 
+    it also make our jsx less cluttered.
+    so do  that we can use layers in tailwind
+*/
+
+@layer components {
+	.container {
+		width: calc(100%);
+		max-width: 1700px;
+	}
+
+	.flex30 {
+		flex: 0 0 30%;
+	}
+	.btn {
+		@apply w-[40px] h-[40px] rounded-full flex items-center justify-center active:bg-dark_hover_1;
+	}
+
+	/* for call actions */
+	.btn_secondary {
+		@apply w-[45px] h-[45px] rounded-full flex items-center justify-center bg-dark_bg_2;
+	}
+
+	.p16 {
+		@apply px-[16px];
+	}
+
+	.textPrimary {
+		font-size: 16px;
+		line-height: 21px;
+		@apply text-dark_text_1;
+	}
+
+	.textSecondary {
+		font-size: 14px;
+		line-height: 19px;
+		@apply text-dark_text_2;
+	}
+
+	.input {
+		@apply w-full dark:bg-dark_bg_2 p-1.5 dark:text-dark_text_1 rounded-lg flex-1 outline-none;
+	}
+
+	.convos {
+		@apply flex-1;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	.overflow_scrollbar {
+		height: calc(100vh - 115px);
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+}
+
+.online {
+	border: 2px solid #00a884;
+}
+
+.offline {
+	border:  2px solid #a8080072;
+}
+
+.hview {
+	height: calc(100vh - 300px);
+	padding: 8px 0;
+}
+
+.callbg {
+	background-image: linear-gradient(rgb(68, 126, 87), rgb(0, 0, 0)), url(./assets/bg_image.webp);
+	background-size: cover;
+	background-blend-mode: saturation;
+}
+
+.largeVideoCall {
+	@apply absolute top-0 bottom-0 left-0 right-0 z-20 object-cover h-full  cursor-pointer;
+}
+
+.smallVideoCall {
+	@apply w-28 h-32 object-cover absolute bottom-4 right-2 z-30   cursor-pointer rounded-lg;
+}
+
+.moveVideoCall{
+	@apply bottom-32 transition-all duration-100;
+}
+
+/* --------custom scrollbar------ */
+
+/* width */
+.scrollbar::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+}
+
+/* track */
+.scrollbar::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* thumb */
+.scrollbar::-webkit-scrollbar-thumb {
+	background: #444e54;
+	border-radius: 5px;
+}
+.scrollbar::-webkit-bar-track {
+	background: transparent; /* Color of the track */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+
+/* general scrollbar */
+::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+}
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+::-webkit-scrollbar-thumb {
+	background: #444e54;
+	border-radius: 5px;
+}
+::-webkit-bar-track {
+	background: transparent; /* Color of the track */
+}
+
+.bar {
+	bar-width: thin; /* For Firefox */
+	bar-color: red green; /* For Firefox */
+}
+
+.bar::-webkit-bar {
+	width: 12px; /* For Chrome, Safari, and Opera */
+}
+
+.bar::-webkit-bar-track {
+	background: transparent; /* Color of the track */
+}
+
+.bar::-webkit-bar-thumb {
+	background-color: #888; /* Color of the bar */
+	border-radius: 20px; /* Roundness of the bar */
+	border: 3px solid #555; /* Border style */
+}
+
+
+/* animations */
+
+.rotateAnimation {
+	animation: rotate 0.3s forwards;
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(-90deg);
+	}
+}
+
+/* emojis animation */
+.openEmojiAnimation {
+	animation: openAn 0.1s forwards;
+}
+@keyframes openAn {
+	0% {
+		transform: translateY(60px);
+	}
+}
+
+/* video call actions animation */
+.openToolsAnimation {
+	animation: openTools 0.2s forwards;
+}
+@keyframes openTools {
+	0% {
+		transform: translateY(100%);
+	}
+}
+
+/*---Emoji picker plugin custom css-----*/
+.epr-dark-theme {
+	background: #202c33 !important;
+	border-radius: 0 !important;
+	border: none !important;
+}
+.epr-dark-theme {
+	width: 100% !important;
+	height: 400px !important;
+}
+
+/* emoji custom classes  */
+.epr-search-container input {
+	background: #222e35 !important;
+	border-radius: 0 !important;
+	border: none !important;
+	font-size: 13px;
+}
+.epr-preview {
+	display: none !important;
+}
+.epr-emoji-category-label {
+	background: transparent !important;
+	font-size: 15px;
+	font-weight: normal !important;
+}
+/*--- Emoji Scroollbar
+	/* width */
+.epr-body::-webkit-scrollbar {
+	width: 6px !important;
+}
+
+/* Track */
+.epr-body::-webkit-scrollbar-track {
+	background: transparent !important;
+}
+
+/* Handle */
+.epr-body::-webkit-scrollbar-thumb {
+	background: #444e54 !important;
+}
+.epr-category-nav {
+	padding: 10px 0 !important;
+}
+.epr-category-nav .epr-active::after {
+	content: '';
+	width: 140px;
+	height: 4px;
+	background: #00a884;
+	position: absolute;
+	bottom: -10px;
+	left: -55px;
+}
+.epr-header {
+	display: flex;
+	flex-direction: column-reverse;
+}

@@ -6,10 +6,10 @@ const Notifications = ({setNotificationInfo}) => {
 		setNotificationInfo(false);
 	};
 	return (
-		<div className='h-[90px] dark:bg-dark_bg_3 flex items-center p-[13px]'>
-			{/* container */}
+		<div>
+{/* 	 
 			<div className='w-full flex items-center justify-between'>
-				{/* left */}
+				 
 				<div className='flex items-center gap-x-4'>
 					<div className='cursor-pointer'>
 						<NotificationIcon className='dark:fill-blue_1' />
@@ -21,12 +21,11 @@ const Notifications = ({setNotificationInfo}) => {
 							<ArrowIcon className='dark:fill-dark_svg_2 mt-1' />
 						</span>
 					</div>
-				</div>
-				{/* right */}
+				</div> 
 				<div className='cursor-pointer' onClick={handleClose}>
 					<CloseIcon className='dark:fill-dark_svg_2 mr-0.5' />
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };

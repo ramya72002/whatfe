@@ -12,7 +12,6 @@ import SocketContext from '../../../context/SocketContext';
 import MessageStatus from '../../chat/messages/MessageStatus';
 
 const Conversation = ({ convo, online, typing }) => {
-	console.log("ccc",convo._id, online);
 
 	const dispath = useDispatch();
 	const { user } = useSelector((state) => state?.user);

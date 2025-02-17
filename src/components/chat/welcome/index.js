@@ -1,3 +1,3 @@
-import WhatsappHome from './WhatsappHome';
+import TeleDailerHome from "./TeleDailerHome";
 
-export { WhatsappHome };
+export { TeleDailerHome };

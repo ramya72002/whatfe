@@ -1,7 +1,7 @@
 import React from 'react';
 import { Logo } from '../../../svg';
 
-const WhatsappHome = () => {
+const TeleDailerHome = () => {
 	return (
 		<div className='h-full w-screen min-w-[100%]  md:min-w-[70%]  dark:bg-dark_bg_4 select-none border-l dark:border-l-dark_border_2 border-b-[6px] border-b-green_2 '>
 			{/* container */}
@@ -13,11 +13,11 @@ const WhatsappHome = () => {
 				{/* infos */}
 				<div className='mt-1 text-center space-y-[12px]  '>
 					<h1 className='text-[32px] dark:text-dark_text_4 font-extralight'>
-						Whatsapp Web
+						Tele-Dailer Web
 					</h1>
 					<p className='text-sm dark:text-dark_text_3'>
 						Send and receive messages without keeping your phone online. <br />
-						Use whatsapp on up to 4 linked devices and 1 phone at the same time.
+						Use Tele-Dailer on up to 4 linked devices and 1 phone at the same time.
 					</p>
 				</div>
 			</div>
@@ -25,4 +25,4 @@ const WhatsappHome = () => {
 	);
 };
 
-export default WhatsappHome;
+export default TeleDailerHome;

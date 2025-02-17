@@ -6,7 +6,7 @@ import {
 	updateMessageSeen,
 	updateMessagesAndConversations,
 } from '../Slices/chatSlice';
-import { WhatsappHome } from '../components/chat/welcome';
+import { TeleDailerHome } from '../components/chat/welcome';
 import { ChatContainer } from '../components/chat';
 import SocketContext from '../context/SocketContext';
 import Call from '../components/chat/call/Call';
@@ -486,7 +486,7 @@ export default function Home() {
 							callUser={callUser}
 						/>
 					)}
-					{!isSmallScreen && !activeConversation?._id && <WhatsappHome />}
+					{!isSmallScreen && !activeConversation?._id && <TeleDailerHome />}
 				</div>
 			</div>
 			<Toaster />

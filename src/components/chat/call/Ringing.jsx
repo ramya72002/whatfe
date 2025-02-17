@@ -55,7 +55,7 @@ const Ringing = ({
 							<h1 className='dark:text-white text-sm'>
 								<b>{name}</b>
 							</h1>
-							<span className='dark:text-dark_text_2 text-xs'>Whatsapp Video...</span>
+							<span className='dark:text-dark_text_2 text-xs'>Tele-Dailer Video...</span>
 						</div>
 					</div>
 

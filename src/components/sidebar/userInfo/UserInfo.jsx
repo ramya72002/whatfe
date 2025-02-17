@@ -103,7 +103,7 @@ const UserInfo = ({ userInfo, setUserInfo, setDetailPic }) => {
 						</div>
 						<p className='text-icon text-white text-sm'>
 							This is not Your username or PIN.This name will be visible to your
-							Whatsapp contacts.
+							Tele-Dailer contacts.
 						</p>
 					</motion.div>
 

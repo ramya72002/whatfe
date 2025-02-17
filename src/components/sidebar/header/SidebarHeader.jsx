@@ -20,17 +20,17 @@ const SidebarHeader = ({ setUserInfo, setSearchUserGroup }) => {
 				</button>
 				{/* user icons */}
 				<ul className='flex items-center gap-x-2.5'>
-					<li className=''>
+					{/* <li className=''>
 						<button className='btn'>
 							<CommunityIcon className='dark:fill-dark_svg_1' />
 						</button>
-					</li>
+					</li> */}
 
-					<li className=''>
+					{/* <li className=''>
 						<button className='btn'>
 							<StoryIcon className='dark:fill-dark_svg_1' />
 						</button>
-					</li>
+					</li> */}
 
 					<li className=''>
 						<button

@@ -28,6 +28,7 @@ import NoVideoIcon from './NoVideo';
 import Loader from './Loader';
 import VideoCallIcon from './VideoCall';
 import PictureInPictureIcon from './pictureInPicture';
+import ScreenShareIcon from './ScreenShareIcon';
 import NewChatIcon from './newChat';
 export {
 	CommunityIcon,
@@ -60,5 +61,6 @@ export {
 	Loader,
 	VideoCallIcon,
 	PictureInPictureIcon,
+	ScreenShareIcon,
 	NewChatIcon
 };

@@ -20,6 +20,7 @@ const Call = ({
 	toggleVideoTrack,
 	endCall,
 	handlePictureInPicture,
+	handleScreenShare,
 	callRejected,
 	totalSecInCall,
 	setTotalSecInCall,
@@ -69,6 +70,7 @@ const Call = ({
 									setTogglePictureInPic={setTogglePictureInPic}
 									togglePictureInPic={togglePictureInPic}
 									endCall={endCall}
+									handleScreenShare={handleScreenShare}
 									handlePictureInPicture={handlePictureInPicture}
 								/>
 							)}

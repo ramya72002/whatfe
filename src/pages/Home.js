@@ -459,7 +459,106 @@ export default function Home() {
 			}
 		}
 	};
-
+	const handleScreenShare = async () => {
+		try {
+			console.log("📡 handleScreenShare triggered, togglePictureInPic:", togglePictureInPic);
+	
+			if (togglePictureInPic) {
+				console.log("🔄 Reverting to camera stream...");
+				const userMediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+	
+				console.log("📷 Camera stream obtained:", userMediaStream);
+				myVideo.current.srcObject = userMediaStream;
+				setStream(userMediaStream);
+				setTogglePictureInPic(false);
+	
+				const sender = connectionRef.current?.peerConnection
+					?.getSenders()
+					.find((s) => s.track?.kind === "video");
+	
+				if (sender && userMediaStream.getVideoTracks().length > 0) {
+					console.log("🔄 Replacing video track with camera stream...");
+					await sender.replaceTrack(userMediaStream.getVideoTracks()[0]);
+				} else {
+					console.warn("⚠️ No video sender found in peer connection!");
+				}
+	
+				socket.emit("updateStream", { streamType: "camera" });
+				console.log("📡 Socket event emitted: updateStream - camera");
+			} else {
+				console.log("🖥️ Starting screen sharing...");
+				const screenStream = await navigator.mediaDevices.getDisplayMedia({
+					video: { cursor: "always" },
+					audio: false
+				});
+	
+				console.log("📺 Screen stream obtained:", screenStream);
+				myVideo.current.srcObject = screenStream;
+				setStream(screenStream);
+				setTogglePictureInPic(true);
+	
+				// const peerConnection = connectionRef.current?.peerConnection;
+				// console.log("🔍 Checking connectionRef:", connectionRef);
+				// console.log("🔍 Checking connectionRef.current:", connectionRef.current);
+				const peerConnection = connectionRef.current?._pc;
+console.log("📡 Checking peer connection:", peerConnection);
+				
+				if (!peerConnection) {
+					console.error("❌ Peer connection is missing! Cannot replace track.");
+					toast.error("Screen sharing failed: No active peer connection!");
+					return;
+				}
+	
+				const sender = peerConnection.getSenders().find((s) => s.track?.kind === "video");
+	
+				if (sender && screenStream.getVideoTracks().length > 0) {
+					console.log("🔄 Before replaceTrack - sender.track:", sender.track);
+					await sender.replaceTrack(screenStream.getVideoTracks()[0]);
+					console.log("✅ After replaceTrack - sender.track:", sender.track);
+				} else {
+					console.warn("⚠️ No video sender found! Trying to add track manually...");
+	
+					try {
+						const newSender = peerConnection.addTrack(screenStream.getVideoTracks()[0], screenStream);
+						console.log("✅ New sender added:", newSender);
+					} catch (error) {
+						console.error("❌ Error adding new sender:", error);
+						toast.error("Failed to add new track.");
+					}
+				}
+	
+				// Notify peer about stream change
+				console.log("📡 Emitting updateStream event...");
+				socket.emit("updateStream", { streamType: "screen" });
+	
+				// Handle when the user stops screen sharing
+				screenStream.getVideoTracks()[0].onended = async () => {
+					console.log("❌ Screen share ended, reverting to camera...");
+					const userMediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+	
+					console.log("📷 Camera stream obtained after screen share ended:", userMediaStream);
+					myVideo.current.srcObject = userMediaStream;
+					setStream(userMediaStream);
+					setTogglePictureInPic(false);
+	
+					const sender = connectionRef.current?.peerConnection
+						?.getSenders()
+						.find((s) => s.track?.kind === "video");
+	
+					if (sender && userMediaStream.getVideoTracks().length > 0) {
+						await sender.replaceTrack(userMediaStream.getVideoTracks()[0]);
+					}
+	
+					socket.emit("updateStream", { streamType: "camera" });
+					console.log("📡 Socket event emitted: updateStream - camera");
+				};
+			}
+		} catch (error) {
+			console.error("❌ Error in handleScreenShare:", error);
+			toast.error("Screen sharing failed!");
+		}
+	};
+	
 	useEffect(() => {
 		document.addEventListener('visibilitychange', (event) => {
 			if (document.visibilityState === 'visible') {
@@ -505,6 +604,7 @@ export default function Home() {
 					toggleAudioTrack={toggleAudioTrack}
 					toggleVideoTrack={toggleVideoTrack}
 					endCall={endCall}
+					handleScreenShare={handleScreenShare}
 					handlePictureInPicture={handlePictureInPicture}
 					callRejected={callRejected}
 					totalSecInCall={totalSecInCall}

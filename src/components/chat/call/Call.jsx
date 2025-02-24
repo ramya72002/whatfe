@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Ringing from './Ringing';
 import Header from './Header';
 import CallArea from './CallArea';
@@ -32,25 +32,68 @@ const Call = ({
 	const [toggleAudio, setToggleAudio] = useState(false);
 	const [toggleVideo, setToggleVideo] = useState(false);
 
+	// Debugging logs
+	useEffect(() => {
+		console.log("Component mounted: Call");
+		console.log("Call state:", call);
+		console.log("Stream available:", !!stream);
+	}, []);
+
+	useEffect(() => {
+		console.log("Call state changed:", call);
+	}, [call]);
+
+	useEffect(() => {
+		console.log("Audio track toggled:", toggleAudio);
+	}, [toggleAudio]);
+
+	useEffect(() => {
+		console.log("Video track toggled:", toggleVideo);
+	}, [toggleVideo]);
+
+	// Check if the microphone and video stream are working
+	useEffect(() => {
+		if (stream) {
+			console.log("Stream tracks:", stream.getTracks());
+
+			const audioTrack = stream.getAudioTracks()[0];
+			const videoTrack = stream.getVideoTracks()[0];
+
+			if (audioTrack) {
+				console.log("Audio track enabled:", audioTrack.enabled);
+			} else {
+				console.log("No audio track found");
+			}
+
+			if (videoTrack) {
+				console.log("Video track enabled:", videoTrack.enabled);
+			} else {
+				console.log("No video track found");
+			}
+		} else {
+			console.log("No stream detected");
+		}
+	}, [stream]);
+
 	return (
 		<div>
 			<Draggable disabled={isSmallScreen}>
 				<div
-					className={`fixed top-0 left-0 sm:top-16 z-10  sm:left-1/3 -translate-x-1/2 -translate-y-1/2 h-full w-full sm:w-[350px] sm:h-[550px] rounded-2xl overflow-hidden callbg shadow-2xl  ${
-						gettingCall && !callAccepted ? 'hidden' : ''
-					}`}
+					className={`fixed top-0 left-0 sm:top-16 z-10 sm:left-1/3 
+					-translate-x-1/2 -translate-y-1/2 h-full w-full sm:w-[350px] 
+					sm:h-[550px] rounded-2xl overflow-hidden callbg shadow-2xl  
+					${gettingCall && !callAccepted ? 'hidden' : ''}`}
 				>
-					{/* container */}
+					{/* Container */}
 					<div
 						onMouseOver={() => setShowActions(true)}
 						onMouseLeave={() => setShowActions(false)}
 						onDoubleClick={() => setShowActions(false)}
-						
 					>
 						<div>
-							{/* header */}
+							{/* Header */}
 							<Header />
-							{/* call area */}
+							{/* Call Area */}
 							<CallArea
 								name={name}
 								callAccepted={callAccepted}
@@ -58,40 +101,50 @@ const Call = ({
 								totalSecInCall={totalSecInCall}
 								callEnded={callEnded}
 							/>
-							{/* call actions */}
+							{/* Call Actions */}
 							{showActions && (
 								<CallActions
-									toggleAudioTrack={toggleAudioTrack}
-									toggleVideoTrack={toggleVideoTrack}
+									toggleAudioTrack={() => {
+										console.log("Toggling audio");
+										toggleAudioTrack();
+										setToggleAudio(!toggleAudio);
+									}}
+									toggleVideoTrack={() => {
+										console.log("Toggling video");
+										toggleVideoTrack();
+										setToggleVideo(!toggleVideo);
+									}}
 									toggleAudio={toggleAudio}
 									setToggleAudio={setToggleAudio}
 									toggleVideo={toggleVideo}
 									setToggleVideo={setToggleVideo}
 									setTogglePictureInPic={setTogglePictureInPic}
 									togglePictureInPic={togglePictureInPic}
-									endCall={endCall}
 									handleScreenShare={handleScreenShare}
+									endCall={() => {
+										console.log("Ending call");
+										endCall();
+									}}
 									handlePictureInPicture={handlePictureInPicture}
 								/>
 							)}
 						</div>
 
-						{/*------- VIDEO STREAMS-------- */}
+						{/* Video Streams */}
 						<div>
-							{/* user video  */}
-
+							{/* User Video */}
 							<div>
-								<video
-									ref={userVideo}
-									playsInline
-									muted
-									autoPlay
-									className='largeVideoCall'
-								></video>
+							<video
+						ref={userVideo}
+						playsInline
+						autoPlay
+						muted={false} // Ensure this is false for incoming audio
+						className="largeVideoCall"
+					/>
+
 							</div>
 
-							{/* my video */}
-
+							{/* My Video */}
 							<div>
 								<video
 									ref={myVideo}
@@ -101,6 +154,7 @@ const Call = ({
 									className={`smallVideoCall ${
 										showActions ? 'moveVideoCall' : ''
 									}`}
+									onLoadedMetadata={() => console.log("My video loaded")}
 								></video>
 							</div>
 						</div>
@@ -119,9 +173,7 @@ const Call = ({
 					callRejected={callRejected}
 					isSmallScreen={isSmallScreen}
 				/>
-			) : (
-				<></>
-			)}
+			) : null}
 		</div>
 	);
 };

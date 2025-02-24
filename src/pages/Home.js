@@ -350,6 +350,8 @@ export default function Home() {
 	const toggleAudioTrack = () => {
 		if (stream) {
 			const audioTracks = stream.getAudioTracks();
+			console.log("Audio track enabled:", audioTracks);
+
 			if (audioTracks.length > 0) {
 				const audioTrack = audioTracks[0];
 				audioTrack.enabled = !audioTrack.enabled;

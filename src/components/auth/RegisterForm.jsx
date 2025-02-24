@@ -28,15 +28,19 @@ export default function RegisterForm() {
 
 	// -----------------submit handler----------------------------
 	const onSubmit = async (data) => {
+		if (Object.keys(errors).length > 0) {
+			return; // Prevent API call if there are validation errors
+		}
 	
 		dispatch(changeStatus('loading'));
+	
 		if (picture) {
 			//upload to cloudinary and then register user
 			await uploadImage().then(async (pictureData) => {
 				let res = await dispatch(
 					registerUser({ ...data, picture: pictureData?.secure_url })
 				);
-
+	
 				if (res?.payload?.user) {
 					navigate('/');
 				}
@@ -48,6 +52,7 @@ export default function RegisterForm() {
 			}
 		}
 	};
+	
 
 	const uploadImage = async () => {
 		let formData = new FormData();
